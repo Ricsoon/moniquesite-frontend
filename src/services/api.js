@@ -1,7 +1,8 @@
 // URL base do backend - ajuste conforme necessário
-// Em produção, se o backend estiver no mesmo servidor, use apenas '/api'
-// Configure via variável de ambiente VITE_API_URL ou será usado o padrão
-const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:3001/api')
+// Em produção Docker, usa '/api' (proxy reverso nginx)
+// Em desenvolvimento, usa 'http://localhost:3000/api'
+// Configure via variável de ambiente VITE_API_URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:3000/api')
 
 class ApiService {
   constructor() {

@@ -29,9 +29,15 @@ export const AuthProvider = ({ children }) => {
 
   const validateToken = async (token) => {
     try {
-      const userData = await apiService.getUserProfile()
-      setUser(userData)
-      setIsAuthenticated(true)
+      const response = await apiService.getUserProfile()
+      // Estrutura: { success: true, data: { user: {...} } }
+      const userData = response.data?.user || response.user || response.data
+      if (userData) {
+        setUser(userData)
+        setIsAuthenticated(true)
+      } else {
+        throw new Error('Dados do usuário não encontrados')
+      }
     } catch (error) {
       // Token inválido ou expirado
       localStorage.removeItem('token')
@@ -64,9 +70,16 @@ export const AuthProvider = ({ children }) => {
 
   const refreshUserData = async () => {
     try {
-      const userData = await apiService.getUserProfile()
-      setUser(userData)
-      return { success: true }
+      const response = await apiService.getUserProfile()
+      // Estrutura: { success: true, data: { user: {...} } }
+      const userData = response.data?.user || response.user || response.data
+      if (userData) {
+        setUser(userData)
+        setIsAuthenticated(true)
+        return { success: true }
+      } else {
+        throw new Error('Dados do usuário não encontrados')
+      }
     } catch (error) {
       return { 
         success: false, 

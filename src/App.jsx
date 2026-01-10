@@ -11,6 +11,7 @@ import Blog from './pages/Blog'
 import Politica from './pages/Politica'
 import Termos from './pages/Termos'
 import Perfil from './pages/Perfil'
+import AuthCallback from './pages/AuthCallback'
 
 const ScrollToTop = () => {
   const location = useLocation()
@@ -40,6 +41,7 @@ function App() {
           <Route path="/politica" element={<Politica />} />
           <Route path="/termos" element={<Termos />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
         </Routes>
       </Layout>
     </AuthProvider>

@@ -9,13 +9,14 @@ export default defineConfig({
   // Para GitHub Pages, usar '/monique-site-test/'
   base: process.env.VITE_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/' : '/monique-site-test/'),
   server: {
-    port: 3000,
+    port: 5173, // Porta padrão do Vite
     open: true,
-    // Proxy para desenvolvimento
+    // Proxy para desenvolvimento - redireciona /api para o backend
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:3000',
+        target: 'http://localhost:3000',
         changeOrigin: true,
+        secure: false,
       }
     }
   },

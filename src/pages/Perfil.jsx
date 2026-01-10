@@ -191,7 +191,7 @@ const Perfil = () => {
                         <label className="text-xs sm:text-sm font-medium text-gray-600">Plano Atual</label>
                       </div>
                       <p className="text-lg md:text-xl font-semibold text-dark break-words">
-                        {user.plan || 'Não informado'}
+                        {user.activePlan?.name || user.plan || 'Não informado'}
                       </p>
                     </div>
                   </div>
