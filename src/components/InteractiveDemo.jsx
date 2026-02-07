@@ -1,28 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const InteractiveDemo = () => {
+  const { t } = useTranslation()
   const chatContainerRef = useRef(null)
   
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      type: 'bot',
-      text: 'Olá! Eu sou a MoniqueBot. Como posso te ajudar hoje? Posso criar documentos, planilhas, enviar emails e muito mais!',
-      time: '10:30'
-    },
-    {
-      id: 2,
-      type: 'user',
-      text: 'Preciso de ajuda com algumas tarefas',
-      time: '10:31'
-    },
-    {
-      id: 3,
-      type: 'bot',
-      text: 'Perfeito! Escolha uma das opções abaixo para começarmos:',
-      time: '10:31'
-    }
-  ])
+  const [messages, setMessages] = useState([])
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -31,15 +14,38 @@ const InteractiveDemo = () => {
   }
 
   useEffect(() => {
+    setMessages([
+      {
+        id: 1,
+        type: 'bot',
+        text: t('Olá! Eu sou a MoniqueBot. Como posso te ajudar hoje? Posso criar documentos, planilhas, enviar emails e muito mais!'),
+        time: '10:30'
+      },
+      {
+        id: 2,
+        type: 'user',
+        text: t('Preciso de ajuda com algumas tarefas'),
+        time: '10:31'
+      },
+      {
+        id: 3,
+        type: 'bot',
+        text: t('Perfeito! Escolha uma das opções abaixo para começarmos:'),
+        time: '10:31'
+      }
+    ])
+  }, [t])
+
+  useEffect(() => {
     scrollToBottom()
   }, [messages])
 
-  const whatsappResponses = {
-    "Criar Documento": "Perfeito! Vou criar um novo documento para você. Qual será o título do documento e qual tipo de conteúdo você gostaria de incluir?",
-    "Criar Planilha": "Excelente! Vamos criar uma planilha. Você precisa de uma planilha para controle financeiro, estoque, ou outro propósito específico?",
-    "Enviar Email": "Ótimo! Para enviar um email, preciso saber: para quem será enviado, qual o assunto e o conteúdo da mensagem. Pode me informar esses detalhes?",
-    "Agende uma reunião": "Claro! Vou te ajudar a agendar uma reunião. Qual seria a melhor data e horário para você? Também preciso saber com quem será a reunião e qual o assunto principal."
-  }
+  const whatsappResponses = useMemo(() => ({
+    [t("Criar Documento")]: t("Perfeito! Vou criar um novo documento para você. Qual será o título do documento e qual tipo de conteúdo você gostaria de incluir?"),
+    [t("Criar Planilha")]: t("Excelente! Vamos criar uma planilha. Você precisa de uma planilha para controle financeiro, estoque, ou outro propósito específico?"),
+    [t("Enviar Email")]: t("Ótimo! Para enviar um email, preciso saber: para quem será enviado, qual o assunto e o conteúdo da mensagem. Pode me informar esses detalhes?"),
+    [t("Agende uma reunião")]: t("Claro! Vou te ajudar a agendar uma reunião. Qual seria a melhor data e horário para você? Também preciso saber com quem será a reunião e qual o assunto principal.")
+  }), [t])
 
   const addMessage = (action) => {
     const newUserMessage = {
@@ -71,8 +77,8 @@ const InteractiveDemo = () => {
     <section id="interactive-demo" className="section-padding bg-gradient-to-r from-primary to-secondary overflow-visible">
       <div className="container-custom overflow-visible">
         <div className="text-center text-white mb-12">
-          <h2 className="text-4xl font-bold mb-4">Experimente a MoniqueBot</h2>
-          <p className="text-xl opacity-90">Interaja com nossa demonstração e veja como ela pode te ajudar</p>
+          <h2 className="text-4xl font-bold mb-4">{t('Experimente a MoniqueBot')}</h2>
+          <p className="text-xl opacity-90">{t('Interaja com nossa demonstração e veja como ela pode te ajudar')}</p>
         </div>
 
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-visible">
@@ -84,7 +90,7 @@ const InteractiveDemo = () => {
               </div>
               <div>
                 <h3 className="text-white font-semibold">MoniqueBot</h3>
-                <p className="text-whatsapp-green text-xs">Online</p>
+                <p className="text-whatsapp-green text-xs">{t('Online')}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4 text-white">
@@ -134,32 +140,32 @@ const InteractiveDemo = () => {
           <div className="bg-white p-4 border-t border-gray-200">
             <div className="flex flex-wrap gap-3 justify-center">
               <button 
-                onClick={() => addMessage('Criar Documento')} 
+                onClick={() => addMessage(t('Criar Documento'))} 
                 className="bg-primary text-white px-4 py-2 rounded-full hover:bg-secondary transition-all duration-300 text-sm font-medium flex items-center space-x-2"
               >
                 <i className="fas fa-file-alt"></i>
-                <span>Criar Documento</span>
+                <span>{t('Criar Documento')}</span>
               </button>
               <button 
-                onClick={() => addMessage('Criar Planilha')} 
+                onClick={() => addMessage(t('Criar Planilha'))} 
                 className="bg-secondary text-white px-4 py-2 rounded-full hover:bg-purple-600 transition-all duration-300 text-sm font-medium flex items-center space-x-2"
               >
                 <i className="fas fa-table"></i>
-                <span>Criar Planilha</span>
+                <span>{t('Criar Planilha')}</span>
               </button>
               <button 
-                onClick={() => addMessage('Enviar Email')} 
+                onClick={() => addMessage(t('Enviar Email'))} 
                 className="bg-accent text-white px-4 py-2 rounded-full hover:bg-green-400 transition-all duration-300 text-sm font-medium flex items-center space-x-2"
               >
                 <i className="fas fa-envelope"></i>
-                <span>Enviar Email</span>
+                <span>{t('Enviar Email')}</span>
               </button>
               <button 
-                onClick={() => addMessage('Agende uma reunião')} 
+                onClick={() => addMessage(t('Agende uma reunião'))} 
                 className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-sm font-medium flex items-center space-x-2"
               >
                 <i className="fas fa-calendar-plus"></i>
-                <span>Agende uma reunião</span>
+                <span>{t('Agende uma reunião')}</span>
               </button>
             </div>
             
@@ -168,7 +174,7 @@ const InteractiveDemo = () => {
               <button className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
                 <i className="fas fa-paperclip text-gray-600"></i>
               </button>
-              <input type="text" placeholder="Digite uma mensagem" className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+              <input type="text" placeholder={t('Digite uma mensagem')} className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
               <button className="w-10 h-10 bg-whatsapp-green rounded-full flex items-center justify-center hover:bg-green-500 transition-colors">
                 <i className="fas fa-paper-plane text-white"></i>
               </button>

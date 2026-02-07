@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
   const [error, setError] = useState('')
@@ -9,6 +10,7 @@ const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
   const { loginGoogle } = useAuth()
   const navigate = useNavigate()
   const containerRef = useRef(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const updateViewport = () => setIsMobileView(window.innerWidth < 640)
@@ -60,7 +62,7 @@ const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
         setLoading(false)
       }
     } catch (err) {
-      setError('Erro ao fazer login com Google. Tente novamente.')
+      setError(t('Erro ao fazer login com Google. Tente novamente.'))
       setLoading(false)
     }
   }
@@ -84,8 +86,8 @@ const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
           <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-5">
             <i className="fas fa-user text-white text-2xl"></i>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-dark mb-2">Acesse sua conta</h2>
-          <p className="text-gray-600 text-sm sm:text-base">Entre para gerenciar sua conta Monique</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-dark mb-2">{t('Acesse sua conta')}</h2>
+          <p className="text-gray-600 text-sm sm:text-base">{t('Entre para gerenciar sua conta Monique')}</p>
         </div>
 
         {error && (
@@ -104,7 +106,7 @@ const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
             {loading ? (
               <>
                 <i className="fas fa-spinner fa-spin"></i>
-                <span>Processando...</span>
+                <span>{t('Processando...')}</span>
               </>
             ) : (
               <>
@@ -116,7 +118,7 @@ const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                   </svg>
                 </div>
-                <span>Fazer login com conta Google</span>
+                <span>{t('Fazer login com conta Google')}</span>
               </>
             )}
           </button>
@@ -124,10 +126,7 @@ const LoginModal = ({ isOpen, onClose, variant = 'modal' }) => {
 
         <div className="mt-6 text-center">
           <p className="text-xs sm:text-sm text-gray-600">
-            Não tem uma conta?{' '}
-            <a href="/contato" className="text-primary hover:text-secondary font-medium">
-              Entre em contato
-            </a>
+            {t('Não tem uma conta? Entre em contato')}
           </p>
         </div>
       </div>

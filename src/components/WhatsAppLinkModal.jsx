@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { apiService } from '../services/api'
+import { useTranslation } from 'react-i18next'
 
 const WhatsAppLinkModal = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(1) // 1: número, 2: código
@@ -8,6 +9,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const containerRef = useRef(null)
+  const { t } = useTranslation()
 
   // Resetar estado quando o modal abrir
   useEffect(() => {
@@ -72,7 +74,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
       const phoneNumbers = phone.replace(/\D/g, '')
       
       if (phoneNumbers.length < 10 || phoneNumbers.length > 11) {
-        setError('Por favor, insira um número de telefone válido.')
+        setError(t('Por favor, insira um número de telefone válido.'))
         setLoading(false)
         return
       }
@@ -80,7 +82,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
       await apiService.sendWhatsAppCode(phoneNumbers)
       setStep(2)
     } catch (error) {
-      setError(error.message || 'Erro ao enviar código. Tente novamente.')
+      setError(error.message || t('Erro ao enviar código. Tente novamente.'))
     } finally {
       setLoading(false)
     }
@@ -93,7 +95,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
 
     try {
       if (code.length !== 6) {
-        setError('Por favor, insira o código completo de 6 dígitos.')
+        setError(t('Por favor, insira o código completo de 6 dígitos.'))
         setLoading(false)
         return
       }
@@ -103,7 +105,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
       // Fechar modal (o onClose já atualiza os dados do usuário)
       onClose()
     } catch (error) {
-      setError(error.message || 'Código inválido. Tente novamente.')
+      setError(error.message || t('Código inválido. Tente novamente.'))
     } finally {
       setLoading(false)
     }
@@ -129,12 +131,12 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
             <i className="fab fa-whatsapp text-white text-2xl"></i>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-dark mb-2">
-            {step === 1 ? 'Vincule seu WhatsApp' : 'Verifique seu número'}
+            {step === 1 ? t('Vincule seu WhatsApp') : t('Verifique seu número')}
           </h2>
           <p className="text-gray-600 text-sm sm:text-base">
             {step === 1 
-              ? 'Para continuar, você precisa vincular seu número do WhatsApp'
-              : 'Digite o código de 6 dígitos enviado para seu WhatsApp'
+              ? t('Para continuar, você precisa vincular seu número do WhatsApp')
+              : t('Digite o código de 6 dígitos enviado para seu WhatsApp')
             }
           </p>
         </div>
@@ -150,7 +152,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
           <form onSubmit={handleSendCode} className="space-y-6">
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-dark mb-2">
-                Número do WhatsApp
+                {t('Número do WhatsApp')}
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -161,14 +163,14 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
                   type="text"
                   value={phone}
                   onChange={handlePhoneChange}
-                  placeholder="(00) 00000-0000"
+                  placeholder={t('(00) 00000-0000')}
                   required
                   className="w-full pl-14 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg"
                   disabled={loading}
                 />
               </div>
               <p className="mt-2 text-xs text-gray-500">
-                Digite seu número com DDD (ex: (11) 98765-4321)
+                {t('Digite seu número com DDD (ex: (11) 98765-4321)')}
               </p>
             </div>
 
@@ -180,12 +182,12 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
               {loading ? (
                 <>
                   <i className="fas fa-spinner fa-spin"></i>
-                  <span>Enviando código...</span>
+                  <span>{t('Enviando código...')}</span>
                 </>
               ) : (
                 <>
                   <i className="fab fa-whatsapp mr-2"></i>
-                  <span>Enviar código de verificação</span>
+                  <span>{t('Enviar código de verificação')}</span>
                 </>
               )}
             </button>
@@ -194,7 +196,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
           <form onSubmit={handleVerifyCode} className="space-y-6">
             <div>
               <label htmlFor="code" className="block text-sm font-medium text-dark mb-2">
-                Código de verificação
+                {t('Código de verificação')}
               </label>
               <div className="relative">
                 <input
@@ -202,7 +204,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
                   type="text"
                   value={code}
                   onChange={handleCodeChange}
-                  placeholder="000000"
+                  placeholder={t('000000')}
                   required
                   maxLength={6}
                   className="w-full px-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-center text-2xl font-bold tracking-widest"
@@ -210,7 +212,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
                 />
               </div>
               <p className="mt-2 text-xs text-gray-500 text-center">
-                Verifique seu WhatsApp e digite o código de 6 dígitos recebido
+                {t('Verifique seu WhatsApp e digite o código de 6 dígitos recebido')}
               </p>
             </div>
 
@@ -220,7 +222,7 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
               className="w-full px-4 py-3 text-gray-600 hover:text-gray-800 font-medium text-sm transition-colors"
             >
               <i className="fas fa-arrow-left mr-2"></i>
-              Voltar e alterar número
+              {t('Voltar e alterar número')}
             </button>
 
             <button
@@ -231,12 +233,12 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
               {loading ? (
                 <>
                   <i className="fas fa-spinner fa-spin"></i>
-                  <span>Verificando...</span>
+                  <span>{t('Verificando...')}</span>
                 </>
               ) : (
                 <>
                   <i className="fas fa-check mr-2"></i>
-                  <span>Verificar e vincular</span>
+                  <span>{t('Verificar e vincular')}</span>
                 </>
               )}
             </button>

@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom'
 import frLogo from '../assets/fr_logo.jpg'
+import { useTranslation } from 'react-i18next'
 
 const Sobre = () => {
+  const { t } = useTranslation()
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-primary to-secondary text-white">
         <div className="container-custom text-center">
-          <h1 className="text-5xl font-bold mb-6">Sobre a MoniqueBot</h1>
+          <h1 className="text-5xl font-bold mb-6">{t('Sobre a MoniqueBot')}</h1>
           <p className="text-xl opacity-90 max-w-3xl mx-auto">
-            Conheça a história por trás da assistente pessoal inteligente que está revolucionando 
-            a forma como as pessoas organizam suas vidas e aumentam sua produtividade.
+            {t('Conheça a história por trás da assistente pessoal inteligente que está revolucionando a forma como as pessoas organizam suas vidas e aumentam sua produtividade.')}
           </p>
         </div>
       </section>
@@ -20,17 +21,12 @@ const Sobre = () => {
         <div className="container-custom overflow-visible">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-visible">
             <div className="space-y-6">
-              <h2 className="text-4xl font-bold text-dark">Nossa História</h2>
+              <h2 className="text-4xl font-bold text-dark">{t('Nossa História')}</h2>
               <p className="text-lg text-gray-600 leading-relaxed">
-                A MoniqueBot nasceu da necessidade de criar uma assistente virtual que fosse 
-                verdadeiramente útil no dia a dia das pessoas. Nossa equipe de desenvolvedores 
-                e especialistas em IA trabalharam incansavelmente para criar uma solução que 
-                combina tecnologia de ponta com simplicidade de uso.
+                {t('A MoniqueBot nasceu da necessidade de criar uma assistente virtual que fosse verdadeiramente útil no dia a dia das pessoas. Nossa equipe de desenvolvedores e especialistas em IA trabalharam incansavelmente para criar uma solução que combina tecnologia de ponta com simplicidade de uso.')}
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Desde o início, nosso objetivo foi claro: desenvolver uma assistente que não 
-                apenas respondesse perguntas, mas que realmente entendesse as necessidades 
-                dos usuários e os ajudasse a ser mais produtivos e organizados.
+                {t('Desde o início, nosso objetivo foi claro: desenvolver uma assistente que não apenas respondesse perguntas, mas que realmente entendesse as necessidades dos usuários e os ajudasse a ser mais produtivos e organizados.')}
               </p>
             </div>
             <div>
@@ -48,9 +44,9 @@ const Sobre = () => {
       <section className="section-padding bg-white/50 overflow-visible">
         <div className="container-custom overflow-visible">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-dark mb-4">Nossos Pilares</h2>
+            <h2 className="text-4xl font-bold text-dark mb-4">{t('Nossos Pilares')}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Os valores que guiam nosso trabalho e desenvolvimento
+              {t('Os valores que guiam nosso trabalho e desenvolvimento')}
             </p>
           </div>
 
@@ -59,11 +55,9 @@ const Sobre = () => {
               <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6">
                 <i className="fas fa-bullseye text-white text-2xl"></i>
               </div>
-              <h3 className="text-2xl font-semibold text-dark mb-4">Missão</h3>
+              <h3 className="text-2xl font-semibold text-dark mb-4">{t('Missão')}</h3>
               <p className="text-gray-600 leading-relaxed">
-                Simplificar a vida das pessoas através de tecnologia inteligente, 
-                oferecendo uma assistente virtual que realmente entende e atende 
-                às necessidades individuais.
+                {t('Simplificar a vida das pessoas através de tecnologia inteligente, oferecendo uma assistente virtual que realmente entende e atende às necessidades individuais.')}
               </p>
             </div>
 
@@ -71,11 +65,9 @@ const Sobre = () => {
               <div className="w-16 h-16 bg-gradient-to-r from-accent to-green-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i className="fas fa-eye text-white text-2xl"></i>
               </div>
-              <h3 className="text-2xl font-semibold text-dark mb-4">Visão</h3>
+              <h3 className="text-2xl font-semibold text-dark mb-4">{t('Visão')}</h3>
               <p className="text-gray-600 leading-relaxed">
-                Ser a assistente pessoal inteligente mais confiável e eficiente 
-                do mercado, reconhecida pela qualidade de suas respostas e pela 
-                capacidade de adaptação aos usuários.
+                {t('Ser a assistente pessoal inteligente mais confiável e eficiente do mercado, reconhecida pela qualidade de suas respostas e pela capacidade de adaptação aos usuários.')}
               </p>
             </div>
 
@@ -83,11 +75,9 @@ const Sobre = () => {
               <div className="w-16 h-16 bg-gradient-to-r from-secondary to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i className="fas fa-heart text-white text-2xl"></i>
               </div>
-              <h3 className="text-2xl font-semibold text-dark mb-4">Valores</h3>
+              <h3 className="text-2xl font-semibold text-dark mb-4">{t('Valores')}</h3>
               <p className="text-gray-600 leading-relaxed">
-                Inovação, simplicidade, confiabilidade e foco no usuário são os 
-                pilares que sustentam cada decisão e cada linha de código da 
-                MoniqueBot.
+                {t('Inovação, simplicidade, confiabilidade e foco no usuário são os pilares que sustentam cada decisão e cada linha de código da MoniqueBot.')}
               </p>
             </div>
           </div>
@@ -98,9 +88,9 @@ const Sobre = () => {
       <section className="section-padding overflow-visible">
         <div className="container-custom overflow-visible">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-dark mb-4">Nossa Equipe</h2>
+            <h2 className="text-4xl font-bold text-dark mb-4">{t('Nossa Equipe')}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Conheça os profissionais por trás da MoniqueBot
+              {t('Conheça os profissionais por trás da MoniqueBot')}
             </p>
           </div>
 
@@ -109,9 +99,9 @@ const Sobre = () => {
               <div className="w-24 h-24 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6">
                 <i className="fas fa-user text-white text-3xl"></i>
               </div>
-              <h3 className="text-xl font-semibold text-dark mb-2">Desenvolvedores</h3>
+              <h3 className="text-xl font-semibold text-dark mb-2">{t('Desenvolvedores')}</h3>
               <p className="text-gray-600">
-                Especialistas em IA, machine learning e desenvolvimento de software
+                {t('Especialistas em IA, machine learning e desenvolvimento de software')}
               </p>
             </div>
 
@@ -119,9 +109,9 @@ const Sobre = () => {
               <div className="w-24 h-24 bg-gradient-to-r from-accent to-green-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i className="fas fa-palette text-white text-3xl"></i>
               </div>
-              <h3 className="text-xl font-semibold text-dark mb-2">Designers</h3>
+              <h3 className="text-xl font-semibold text-dark mb-2">{t('Designers')}</h3>
               <p className="text-gray-600">
-                Criadores de interfaces intuitivas e experiências de usuário excepcionais
+                {t('Criadores de interfaces intuitivas e experiências de usuário excepcionais')}
               </p>
             </div>
 
@@ -129,9 +119,9 @@ const Sobre = () => {
               <div className="w-24 h-24 bg-gradient-to-r from-secondary to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i className="fas fa-users text-white text-3xl"></i>
               </div>
-              <h3 className="text-xl font-semibold text-dark mb-2">Especialistas</h3>
+              <h3 className="text-xl font-semibold text-dark mb-2">{t('Especialistas')}</h3>
               <p className="text-gray-600">
-                Profissionais em UX, marketing e atendimento ao cliente
+                {t('Profissionais em UX, marketing e atendimento ao cliente')}
               </p>
             </div>
           </div>
@@ -141,16 +131,16 @@ const Sobre = () => {
       {/* CTA */}
       <section className="section-padding bg-gradient-to-r from-primary to-secondary text-white">
         <div className="container-custom text-center">
-          <h2 className="text-4xl font-bold mb-6">Quer Fazer Parte da Nossa História?</h2>
+          <h2 className="text-4xl font-bold mb-6">{t('Quer Fazer Parte da Nossa História?')}</h2>
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Junte-se a nós e experimente o futuro da assistência pessoal inteligente
+            {t('Junte-se a nós e experimente o futuro da assistência pessoal inteligente')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contato" className="btn-accent">
-              Começar Agora
+              {t('Começar Agora')}
             </Link>
             <Link to="/funcionalidades" className="border-2 border-white text-white px-8 py-4 rounded-xl hover:bg-white hover:text-dark transition-all duration-300 font-semibold text-lg">
-              Ver Funcionalidades
+              {t('Ver Funcionalidades')}
             </Link>
           </div>
         </div>

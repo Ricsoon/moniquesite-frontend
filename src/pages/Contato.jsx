@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const Contato = () => {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,31 +20,30 @@ const Contato = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Aqui você pode adicionar a lógica para enviar o formulário
     console.log('Formulário enviado:', formData)
-    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.')
+    alert('Formulário enviado com sucesso!')
   }
 
   const contactInfo = [
     {
       icon: 'fas fa-map-marker-alt',
-      title: 'Endereço',
-      details: ['Bairro do Recife, 123', 'Recife - PE', '01234-567']
+      title: t('Endereço'),
+      details: [t('Bairro do Recife, 123'), t('Recife - PE'), t('01234-567')]
     },
     {
       icon: 'fas fa-phone',
-      title: 'Telefone',
-      details: ['(81) 9862-0456']
+      title: t('Telefone'),
+      details: [t('(81) 9862-0456')]
     },
     {
       icon: 'fas fa-envelope',
-      title: 'Email',
-      details: ['padrao@dev-music.com']
+      title: t('Email'),
+      details: [t('padrao@dev-music.com')]
     },
     {
       icon: 'fas fa-clock',
-      title: 'Horário de Atendimento',
-      details: ['Segunda a Sexta: 8h às 18h', 'Sábado: 9h às 13h']
+      title: t('Horário de Atendimento'),
+      details: [t('Segunda a Sexta: 8h às 18h'), t('Sábado: 9h às 13h')]
     }
   ]
 
@@ -51,10 +52,9 @@ const Contato = () => {
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-primary to-secondary text-white">
         <div className="container-custom text-center">
-          <h1 className="text-5xl font-bold mb-6">Entre em Contato</h1>
+          <h1 className="text-5xl font-bold mb-6">{t('Entre em Contato')}</h1>
           <p className="text-xl opacity-90 max-w-3xl mx-auto">
-            Estamos aqui para ajudar! Entre em contato conosco para tirar dúvidas, 
-            solicitar demonstrações ou conhecer nossos planos.
+            {t('Estamos aqui para ajudar! Entre em contato conosco para tirar dúvidas, solicitar demonstrações ou conhecer nossos planos.')}
           </p>
         </div>
       </section>
@@ -65,12 +65,12 @@ const Contato = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 overflow-visible">
             {/* Contact Form */}
             <div className="bg-white rounded-2xl shadow-2xl p-8 overflow-visible">
-              <h2 className="text-3xl font-bold text-dark mb-6">Envie sua Mensagem</h2>
+              <h2 className="text-3xl font-bold text-dark mb-6">{t('Envie sua Mensagem')}</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Nome Completo *
+                      {t('Nome Completo *')}
                     </label>
                     <input
                       type="text"
@@ -80,12 +80,12 @@ const Contato = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="Seu nome completo"
+                      placeholder={t('Seu nome completo')}
                     />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email *
+                      {t('Email *')}
                     </label>
                     <input
                       type="email"
@@ -95,7 +95,7 @@ const Contato = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="seu@email.com"
+                      placeholder={t('seu@email.com')}
                     />
                   </div>
                 </div>
@@ -103,7 +103,7 @@ const Contato = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Telefone
+                      {t('Telefone')}
                     </label>
                     <input
                       type="tel"
@@ -112,12 +112,12 @@ const Contato = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="(11) 99999-9999"
+                      placeholder={t('(11) 99999-9999')}
                     />
                   </div>
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                      Assunto *
+                      {t('Assunto *')}
                     </label>
                     <select
                       id="subject"
@@ -127,19 +127,19 @@ const Contato = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     >
-                      <option value="">Selecione um assunto</option>
-                      <option value="demo">Solicitar Demonstração</option>
-                      <option value="planos">Informações sobre Planos</option>
-                      <option value="suporte">Suporte Técnico</option>
-                      <option value="parceria">Parceria Comercial</option>
-                      <option value="outro">Outro</option>
+                      <option value="">{t('Selecione um assunto')}</option>
+                      <option value="demo">{t('Solicitar Demonstração')}</option>
+                      <option value="planos">{t('Informações sobre Planos')}</option>
+                      <option value="suporte">{t('Suporte Técnico')}</option>
+                      <option value="parceria">{t('Parceria Comercial')}</option>
+                      <option value="outro">{t('Outro')}</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Mensagem *
+                    {t('Mensagem *')}
                   </label>
                   <textarea
                     id="message"
@@ -149,7 +149,7 @@ const Contato = () => {
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Descreva sua necessidade ou dúvida..."
+                    placeholder={t('Descreva sua necessidade ou dúvida...')}
                   />
                 </div>
 
@@ -157,7 +157,7 @@ const Contato = () => {
                   type="submit"
                   className="w-full btn-primary"
                 >
-                  Enviar Mensagem
+                  {t('Enviar Mensagem')}
                   <i className="fas fa-paper-plane ml-2"></i>
                 </button>
               </form>
@@ -166,10 +166,9 @@ const Contato = () => {
             {/* Contact Information */}
             <div className="space-y-8 overflow-visible">
               <div>
-                <h2 className="text-3xl font-bold text-dark mb-6">Informações de Contato</h2>
+                <h2 className="text-3xl font-bold text-dark mb-6">{t('Informações de Contato')}</h2>
                 <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Nossa equipe está pronta para atender você. Entre em contato através 
-                  dos canais abaixo ou preencha o formulário ao lado.
+                  {t('Nossa equipe está pronta para atender você. Entre em contato através dos canais abaixo ou preencha o formulário ao lado.')}
                 </p>
               </div>
 
@@ -193,7 +192,7 @@ const Contato = () => {
 
               {/* Social Media */}
               <div className="bg-white rounded-xl p-6 shadow-lg overflow-visible">
-                <h3 className="text-xl font-semibold text-dark mb-4">Siga-nos nas Redes Sociais</h3>
+                <h3 className="text-xl font-semibold text-dark mb-4">{t('Siga-nos nas Redes Sociais')}</h3>
                 <div className="flex space-x-4">
                   <a href="#" className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
                     <i className="fab fa-facebook-f text-white"></i>
@@ -218,29 +217,29 @@ const Contato = () => {
       <section className="section-padding bg-white/50 overflow-visible">
         <div className="container-custom overflow-visible">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-dark mb-4">Perguntas Frequentes</h2>
+            <h2 className="text-4xl font-bold text-dark mb-4">{t('Perguntas Frequentes')}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Encontre respostas para as dúvidas mais comuns sobre a MoniqueBot
+              {t('Encontre respostas para as dúvidas mais comuns sobre a MoniqueBot')}
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6 overflow-visible">
             {[
               {
-                question: "Como funciona a MoniqueBot?",
-                answer: "A MoniqueBot é uma assistente pessoal inteligente que utiliza IA avançada para entender suas necessidades e ajudá-lo com tarefas do dia a dia, desde agendamentos até criação de documentos."
+                question: t('Como funciona a MoniqueBot?'),
+                answer: t('A MoniqueBot é uma assistente pessoal inteligente que utiliza IA avançada para entender suas necessidades e ajudá-lo com tarefas do dia a dia, desde agendamentos até criação de documentos.')
               },
               {
-                question: "Quais são os planos disponíveis?",
-                answer: "Oferecemos três planos: Básico, Intermediário e Avançado. Todos os planos estarão disponíveis em breve com diferentes níveis de funcionalidades e recursos para atender suas necessidades específicas."
+                question: t('Quais são os planos disponíveis?'),
+                answer: t('Oferecemos três planos: Básico, Intermediário e Avançado. Todos os planos estarão disponíveis em breve com diferentes níveis de funcionalidades e recursos para atender suas necessidades específicas.')
               },
               {
-                question: "Meus dados estão seguros?",
-                answer: "Sim, levamos a segurança muito a sério. Todos os dados são criptografados e armazenados seguindo as melhores práticas de segurança e privacidade."
+                question: t('Meus dados estão seguros?'),
+                answer: t('Sim, levamos a segurança muito a sério. Todos os dados são criptografados e armazenados seguindo as melhores práticas de segurança e privacidade.')
               },
               {
-                question: "Posso cancelar minha assinatura a qualquer momento?",
-                answer: "Sim, você pode cancelar sua assinatura a qualquer momento sem taxas adicionais. Seu acesso permanecerá ativo até o final do período pago."
+                question: t('Posso cancelar minha assinatura a qualquer momento?'),
+                answer: t('Sim, você pode cancelar sua assinatura a qualquer momento sem taxas adicionais. Seu acesso permanecerá ativo até o final do período pago.')
               }
             ].map((faq, index) => (
               <div key={index} className="bg-white rounded-xl p-6 shadow-lg">

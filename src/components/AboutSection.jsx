@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import frLogo from '../assets/fr_logo.jpg'
+import { useTranslation } from 'react-i18next'
 
 const AboutSection = () => {
+  const { t } = useTranslation()
   return (
     <section className="section-padding bg-white">
       <div className="container-custom">
@@ -16,36 +18,34 @@ const AboutSection = () => {
           </div>
           
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-dark">Desenvolvido com 💜 pela FR Desenvolvimento</h2>
+            <h2 className="text-4xl font-bold text-dark">{t('Desenvolvido com 💜 pela FR Desenvolvimento')}</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              A FR Desenvolvimento é especializada em criar soluções inovadoras que combinam 
-              tecnologia de ponta com design intuitivo. Acreditamos que a tecnologia deve 
-              servir às pessoas, não o contrário.
+              {t('A FR Desenvolvimento é especializada em criar soluções inovadoras que combinam tecnologia de ponta com design intuitivo. Acreditamos que a tecnologia deve servir às pessoas, não o contrário.')}
             </p>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center">
                   <i className="fas fa-check text-white text-xs"></i>
                 </div>
-                <span className="text-gray-700">Desenvolvimento com foco no usuário</span>
+                <span className="text-gray-700">{t('Desenvolvimento com foco no usuário')}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center">
                   <i className="fas fa-check text-white text-xs"></i>
                 </div>
-                <span className="text-gray-700">Tecnologia de última geração</span>
+                <span className="text-gray-700">{t('Tecnologia de última geração')}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center">
                   <i className="fas fa-check text-white text-xs"></i>
                 </div>
-                <span className="text-gray-700">Suporte e atualizações contínuas</span>
+                <span className="text-gray-700">{t('Suporte e atualizações contínuas')}</span>
               </div>
             </div>
             
             <div className="pt-6">
               <Link to="/sobre" className="btn-primary inline-flex items-center">
-                Conheça a FR Desenvolvimento
+                {t('Conheça a FR Desenvolvimento')}
                 <i className="fas fa-arrow-right ml-2"></i>
               </Link>
             </div>

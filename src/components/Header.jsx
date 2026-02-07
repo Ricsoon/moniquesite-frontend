@@ -2,31 +2,38 @@ import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import LoginModal from './LoginModal'
+import { useTranslation } from 'react-i18next'
+import moniqueAiIcon from '../assets/monique_ai.jpeg'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const location = useLocation()
   const { isAuthenticated, user } = useAuth()
+  const { t, i18n } = useTranslation()
 
   const isActive = (path) => location.pathname === path
 
   const navigation = [
-    { name: 'Início', path: '/' },
-    { name: 'Funcionalidades', path: '/funcionalidades' },
-    { name: 'Sobre', path: '/sobre' },
-    { name: 'Planos', path: '/planos' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contato', path: '/contato' }
+    { name: t('Início'), path: '/' },
+    { name: t('Funcionalidades'), path: '/funcionalidades' },
+    { name: t('Sobre'), path: '/sobre' },
+    { name: t('Planos'), path: '/planos' },
+    { name: t('Blog'), path: '/blog' },
+    { name: t('Contato'), path: '/contato' }
   ]
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng)
+  }
 
   return (
     <header className="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
       <nav className="container-custom py-4 overflow-visible">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-              <i className="fas fa-robot text-white text-lg"></i>
+            <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center overflow-hidden">
+              <img src={moniqueAiIcon} alt="MoniqueBot" className="w-8 h-8 rounded-full object-cover" />
             </div>
             <span className="text-lg sm:text-xl font-semibold text-dark whitespace-nowrap">
               Monique<span className="text-primary">Bot</span>
@@ -51,14 +58,31 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
+            {/* Language Selector */}
+            <div className="flex items-center gap-1 mr-4">
+              <button
+                onClick={() => changeLanguage('pt-BR')}
+                className={`w-8 h-6 rounded-sm overflow-hidden border-2 ${i18n.language === 'pt-BR' ? 'border-primary' : 'border-gray-300'} hover:border-primary transition-colors`}
+                title="Português (Brasil)"
+              >
+                <img src="https://flagcdn.com/w40/br.png" alt="BR" className="w-full h-full object-cover" />
+              </button>
+              <button
+                onClick={() => changeLanguage('en-US')}
+                className={`w-8 h-6 rounded-sm overflow-hidden border-2 ${i18n.language === 'en-US' ? 'border-primary' : 'border-gray-300'} hover:border-primary transition-colors`}
+                title="English (US)"
+              >
+                <img src="https://flagcdn.com/w40/us.png" alt="US" className="w-full h-full object-cover" />
+              </button>
+            </div>
             {isAuthenticated ? (
               <Link
                 to="/perfil"
                 className="btn-primary hidden sm:inline-flex items-center text-sm sm:text-base px-4 sm:px-8 py-2 sm:py-4"
               >
                 <i className="fas fa-user mr-2"></i>
-                <span className="hidden lg:inline">{user?.name || 'Minha Conta'}</span>
-                <span className="lg:hidden">Conta</span>
+                <span className="hidden lg:inline">{t('Minha Conta')}</span>
+                <span className="lg:hidden">{t('Conta')}</span>
               </Link>
             ) : (
               <div className="relative overflow-visible">
@@ -67,8 +91,8 @@ const Header = () => {
                   className="btn-primary hidden sm:inline-flex items-center text-sm sm:text-base px-4 sm:px-8 py-2 sm:py-4"
                 >
                   <i className="fas fa-sign-in-alt mr-2"></i>
-                  <span className="hidden lg:inline">Acesse sua conta</span>
-                  <span className="lg:hidden">Entrar</span>
+                  <span className="hidden lg:inline">{t('Acesse sua conta')}</span>
+                  <span className="lg:hidden">{t('Entrar')}</span>
                 </button>
 
                 <LoginModal 
@@ -82,8 +106,8 @@ const Header = () => {
               to="/contato"
               className="btn-secondary hidden sm:inline-flex items-center text-sm sm:text-base px-4 sm:px-8 py-2 sm:py-4"
             >
-              <span className="hidden lg:inline">Experimentar Agora</span>
-              <span className="lg:hidden">Experimentar</span>
+              <span className="hidden lg:inline">{t('Experimentar Agora')}</span>
+              <span className="lg:hidden">{t('Experimentar')}</span>
             </Link>
             
             {/* Mobile menu button */}
@@ -122,7 +146,7 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <i className="fas fa-user mr-2"></i>
-                  Minha Conta
+                  {t('Minha Conta')}
                 </Link>
               ) : (
                 <button
@@ -133,7 +157,7 @@ const Header = () => {
                   className="btn-primary mt-4 w-full"
                 >
                   <i className="fas fa-sign-in-alt mr-2"></i>
-                  Acesse sua conta
+                  {t('Acesse sua conta')}
                 </button>
               )}
               <Link
@@ -141,7 +165,7 @@ const Header = () => {
                 className="btn-secondary mt-2 text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Experimentar Agora
+                {t('Experimentar Agora')}
               </Link>
             </div>
           </div>

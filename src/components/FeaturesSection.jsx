@@ -1,23 +1,25 @@
 import personImage from '../assets/person_fr.png'
+import { useTranslation } from 'react-i18next'
 
 const FeaturesSection = () => {
+  const { t } = useTranslation()
   const features = [
     {
       icon: 'fas fa-calendar-check',
-      title: 'Gestão de Agenda',
-      description: 'Agende compromissos, defina lembretes e organize sua rotina de forma inteligente. MoniqueBot sugere horários ideais baseados em seus hábitos.',
+      title: t('Gestão de Agenda'),
+      description: t('Agende compromissos, defina lembretes e organize sua rotina de forma inteligente. MoniqueBot sugere horários ideais baseados em seus hábitos.'),
       color: 'bg-primary'
     },
     {
       icon: 'fas fa-search',
-      title: 'Pesquisa Inteligente',
-      description: 'Obtenha respostas precisas para suas dúvidas, desde informações simples até pesquisas complexas, com fontes confiáveis.',
+      title: t('Pesquisa Inteligente'),
+      description: t('Obtenha respostas precisas para suas dúvidas, desde informações simples até pesquisas complexas, com fontes confiáveis.'),
       color: 'bg-secondary'
     },
     {
       icon: 'fas fa-tasks',
-      title: 'Gestão de Tarefas',
-      description: 'Crie listas de afazeres, defina prioridades e receba notificações inteligentes para nunca mais esquecer uma tarefa importante.',
+      title: t('Gestão de Tarefas'),
+      description: t('Crie listas de afazeres, defina prioridades e receba notificações inteligentes para nunca mais esquecer uma tarefa importante.'),
       color: 'bg-accent'
     }
   ]
@@ -26,9 +28,9 @@ const FeaturesSection = () => {
     <section className="section-padding overflow-visible">
       <div className="container-custom overflow-visible">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-dark mb-4">Funcionalidades Principais</h2>
+          <h2 className="text-4xl font-bold text-dark mb-4">{t('Funcionalidades Principais')}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Descubra tudo que a MoniqueBot pode fazer por você
+            {t('Descubra tudo que a MoniqueBot pode fazer por você')}
           </p>
         </div>
 

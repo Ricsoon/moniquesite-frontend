@@ -2,65 +2,67 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import LoginModal from '../components/LoginModal'
+import { useTranslation } from 'react-i18next'
 
 const Planos = () => {
   const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [showLoginPrompt, setShowLoginPrompt] = useState(false)
+  const { t } = useTranslation()
 
   const plans = [
     {
-      name: 'Gratuito',
-      price: 'R$ 0',
-      period: '/mês',
-      description: 'Perfeito para começar e experimentar a MoniqueBot',
+      name: t('Gratuito'),
+      price: t('R$ 0'),
+      period: t('/mês'),
+      description: t('Perfeito para começar e experimentar a MoniqueBot'),
       features: [
-        'Até 50 interações por mês',
-        'Funcionalidades básicas',
-        'Pesquisas simples',
-        'Suporte por email',
-        '1 usuário'
+        t('Até 50 interações por mês'),
+        t('Funcionalidades básicas'),
+        t('Pesquisas simples'),
+        t('Suporte por email'),
+        t('1 usuário')
       ],
-      buttonText: 'Começar Grátis',
+      buttonText: t('Começar Grátis'),
       buttonStyle: 'btn-secondary',
       popular: false,
       comingSoon: false
     },
     {
-      name: 'Pro',
-      price: 'R$ 50',
-      period: '/mês',
-      description: 'Ideal para profissionais e pequenas empresas',
+      name: t('Pro'),
+      price: t('R$ 50'),
+      period: t('/mês'),
+      description: t('Ideal para profissionais e pequenas empresas'),
       features: [
-        'Mais de 50 interações por mês',
-        'Todas as funcionalidades do Google',
-        'Pesquisa avançada',
-        'Suporte prioritário',
-        '1 único usuários',
-        'Integrações básicas',
-        'Memória ampliada'
+        t('Mais de 50 interações por mês'),
+        t('Todas as funcionalidades do Google'),
+        t('Pesquisa avançada'),
+        t('Suporte prioritário'),
+        t('1 único usuários'),
+        t('Integrações básicas'),
+        t('Memória ampliada')
       ],
-      buttonText: 'Assinar Pro',
+      buttonText: t('Assinar Pro'),
       buttonStyle: 'btn-primary',
       popular: true,
       comingSoon: false
     },
     {
-      name: 'Ilimitado',
-      price: 'R$ 200',
-      period: '/mês',
-      description: 'Para empresas que precisam de recursos avançados',
+      name: t('Ilimitado'),
+      price: t('R$ 200'),
+      period: t('/mês'),
+      description: t('Para empresas que precisam de recursos avançados'),
       features: [
-        'Interações Ilimitadas',
-        'Análise de dados avançada',
-        'Relatórios personalizados',
-        'Suporte 24/7',
-        'Todas as integrações',
-        'Memória ilimitado',
-        'Treinamento personalizado'
+        t('Interações Ilimitadas'),
+        t('Análise de dados avançada'),
+        t('Relatórios personalizados'),
+        t('Suporte 24/7'),
+        t('Todas as integrações'),
+        t('Memória ilimitado'),
+        t('Treinamento personalizado')
       ],
-      buttonText: 'Assinar Ilimitado',
+      buttonText: t('Assinar Ilimitado'),
       buttonStyle: 'btn-accent',
       popular: false,
       comingSoon: false
@@ -70,36 +72,36 @@ const Planos = () => {
   const features = [
     {
       icon: 'fas fa-shield-alt',
-      title: 'Segurança Garantida',
-      description: 'Seus dados são protegidos com criptografia de nível bancário'
+      title: t('Segurança Garantida'),
+      description: t('Seus dados são protegidos com criptografia de nível bancário')
     },
     {
       icon: 'fas fa-sync-alt',
-      title: 'Sincronização em Tempo Real',
-      description: 'Todas as suas informações são sincronizadas instantaneamente'
+      title: t('Sincronização em Tempo Real'),
+      description: t('Todas as suas informações são sincronizadas instantaneamente')
     },
     {
       icon: 'fas fa-mobile-alt',
-      title: 'Multiplataforma',
-      description: 'Acesse a MoniqueBot de qualquer dispositivo, a qualquer hora'
+      title: t('Multiplataforma'),
+      description: t('Acesse a MoniqueBot de qualquer dispositivo, a qualquer hora')
     },
     {
       icon: 'fas fa-headset',
-      title: 'Suporte Especializado',
-      description: 'Nossa equipe está sempre pronta para ajudar você'
+      title: t('Suporte Especializado'),
+      description: t('Nossa equipe está sempre pronta para ajudar você')
     }
   ]
 
   const comparisonRows = [
-    { feature: 'Interações por mês', basic: '50', intermediate: '200', advanced: 'Ilimitadas' },
-    { feature: 'Usuários', basic: '1', intermediate: '1', advanced: '1' },
-    { feature: 'Gestão de Agenda', basic: 'Básica', intermediate: 'Completa', advanced: 'Completa' },
-    { feature: 'Criação de Documentos', basic: 'Básica', intermediate: 'Completa', advanced: 'Completa' },
-    { feature: 'Análise de Dados', basic: 'Não', intermediate: 'Básica', advanced: 'Avançada' },
-    { feature: 'API', basic: 'Básica', intermediate: 'Básica', advanced: 'Completa' },
-    { feature: 'Suporte', basic: 'Email', intermediate: 'Prioritário', advanced: '24/7' },
-    { feature: 'Integrações', basic: 'Básicas', intermediate: 'Completas', advanced: 'Completas' },
-    { feature: 'Armazenamento', basic: 'Básico', intermediate: 'Ampliado', advanced: 'Ilimitado' }
+    { feature: t('Interações por mês'), basic: '50', intermediate: '200', advanced: t('Ilimitado') },
+    { feature: t('Usuários'), basic: '1', intermediate: '1', advanced: '1' },
+    { feature: t('Gestão de Agenda'), basic: t('Básica'), intermediate: t('Completa'), advanced: t('Completa') },
+    { feature: t('Criação de Documentos'), basic: t('Básica'), intermediate: t('Completa'), advanced: t('Completa') },
+    { feature: t('Análise de Dados'), basic: t('Não'), intermediate: t('Básica'), advanced: t('Avançada') },
+    { feature: t('API'), basic: t('Básica'), intermediate: t('Básica'), advanced: t('Completa') },
+    { feature: t('Suporte'), basic: t('Email'), intermediate: t('Prioritário'), advanced: t('24/7') },
+    { feature: t('Integrações'), basic: t('Básicas'), intermediate: t('Completas'), advanced: t('Completas') },
+    { feature: t('Armazenamento'), basic: t('Básico'), intermediate: t('Ampliado'), advanced: t('Ilimitado') }
   ]
 
   const handlePlanClick = () => {
@@ -121,10 +123,9 @@ const Planos = () => {
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-primary to-secondary text-white">
         <div className="container-custom text-center">
-          <h1 className="text-5xl font-bold mb-6">Escolha seu Plano</h1>
+          <h1 className="text-5xl font-bold mb-6">{t('Escolha seu Plano')}</h1>
           <p className="text-xl opacity-90 max-w-3xl mx-auto">
-            Encontre o plano perfeito para suas necessidades. Todos os planos incluem 
-            acesso completo à MoniqueBot com diferentes níveis de recursos e suporte.
+            {t('Encontre o plano perfeito para suas necessidades. Todos os planos incluem acesso completo à MoniqueBot com diferentes níveis de recursos e suporte.')}
           </p>
         </div>
       </section>
@@ -143,7 +144,7 @@ const Planos = () => {
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <span className="bg-primary text-white px-6 py-2 rounded-full text-sm font-semibold">
-                      Recomendado
+                      {t('Recomendado')}
                     </span>
                   </div>
                 )}
@@ -172,7 +173,7 @@ const Planos = () => {
                   onClick={handlePlanClick}
                   className={`w-full ${plan.buttonStyle} text-center block`}
                 >
-                  {isAuthenticated ? 'Ver meu perfil' : plan.buttonText}
+                  {isAuthenticated ? t('Ver meu perfil') : plan.buttonText}
                 </button>
               </div>
             ))}
@@ -184,9 +185,9 @@ const Planos = () => {
       <section className="section-padding bg-white/50 overflow-visible">
         <div className="container-custom overflow-visible">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-dark mb-4">Por que Escolher a MoniqueBot?</h2>
+            <h2 className="text-4xl font-bold text-dark mb-4">{t('Por que Escolher a MoniqueBot?')}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Recursos e benefícios que fazem a diferença no seu dia a dia
+              {t('Recursos e benefícios que fazem a diferença no seu dia a dia')}
             </p>
           </div>
 
@@ -208,9 +209,9 @@ const Planos = () => {
       <section className="section-padding">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-dark mb-4">Compare os Planos</h2>
+            <h2 className="text-4xl font-bold text-dark mb-4">{t('Compare os Planos')}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Veja em detalhes o que cada plano oferece
+              {t('Veja em detalhes o que cada plano oferece')}
             </p>
           </div>
 
@@ -220,18 +221,18 @@ const Planos = () => {
               <table className="w-full table-auto">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Recursos</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">{t('Recursos')}</th>
                     <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
-                      Gratuito
-                      <div className="text-xs text-primary font-normal mt-1">R$ 0/mês</div>
+                      {t('Gratuito')}
+                      <div className="text-xs text-primary font-normal mt-1">{t('R$ 0')}/mês</div>
                     </th>
                     <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
-                      Pro
-                      <div className="text-xs text-primary font-normal mt-1">R$ 50/mês</div>
+                      {t('Pro')}
+                      <div className="text-xs text-primary font-normal mt-1">{t('R$ 50')}/mês</div>
                     </th>
                     <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
-                      Ilimitado
-                      <div className="text-xs text-primary font-normal mt-1">R$ 200/mês</div>
+                      {t('Ilimitado')}
+                      <div className="text-xs text-primary font-normal mt-1">{t('R$ 200')}/mês</div>
                     </th>
                   </tr>
                 </thead>
@@ -256,15 +257,15 @@ const Planos = () => {
                 <p className="text-base font-semibold text-dark mb-3">{row.feature}</p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500 text-sm">Gratuito</span>
+                    <span className="text-gray-500 text-sm">{t('Gratuito')}</span>
                     <span className="text-dark font-semibold text-sm">{row.basic}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500 text-sm">Pro</span>
+                    <span className="text-gray-500 text-sm">{t('Pro')}</span>
                     <span className="text-dark font-semibold text-sm">{row.intermediate}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500 text-sm">Ilimitado</span>
+                    <span className="text-gray-500 text-sm">{t('Ilimitado')}</span>
                     <span className="text-dark font-semibold text-sm">{row.advanced}</span>
                   </div>
                 </div>
@@ -278,33 +279,33 @@ const Planos = () => {
       <section className="section-padding bg-white/50 overflow-visible">
         <div className="container-custom overflow-visible">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-dark mb-4">Perguntas sobre Planos</h2>
+            <h2 className="text-4xl font-bold text-dark mb-4">{t('Perguntas sobre Planos')}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Tire suas dúvidas sobre nossos planos e escolha o ideal para você
+              {t('Tire suas dúvidas sobre nossos planos e escolha o ideal para você')}
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6 overflow-visible">
             {[
               {
-                question: "Qual plano é o mais adequado para mim?",
-                answer: "O plano Gratuito é perfeito para experimentar a MoniqueBot. O plano Pro (Recomendado) é ideal para profissionais e pequenas empresas que precisam de recursos completos. O plano Ilimitado é para empresas que necessitam de recursos avançados e suporte dedicado."
+                question: t('Qual plano é o mais adequado para mim?'),
+                answer: t('O plano Gratuito é perfeito para experimentar a MoniqueBot. O plano Pro (Recomendado) é ideal para profissionais e pequenas empresas que precisam de recursos completos. O plano Ilimitado é para empresas que necessitam de recursos avançados e suporte dedicado.')
               },
               {
-                question: "Qual a diferença entre os planos?",
-                answer: "O plano Gratuito oferece 50 interações por mês e funcionalidades básicas. O Pro oferece interações ilimitadas, recursos completos e até 5 usuários. O Ilimitado inclui tudo do Pro, mais API completa, usuários ilimitados, análises avançadas e suporte 24/7."
+                question: t('Qual a diferença entre os planos?'),
+                answer: t('O plano Gratuito oferece 50 interações por mês e funcionalidades básicas. O Pro oferece interações ilimitadas, recursos completos e até 5 usuários. O Ilimitado inclui tudo do Pro, mais API completa, usuários ilimitados, análises avançadas e suporte 24/7.')
               },
               {
-                question: "Posso mudar de plano a qualquer momento?",
-                answer: "Sim, você pode fazer upgrade ou downgrade a qualquer momento. As alterações serão aplicadas imediatamente e os valores ajustados proporcionalmente. Ao fazer downgrade, você mantém acesso até o final do período pago."
+                question: t('Posso mudar de plano a qualquer momento?'),
+                answer: t('Sim, você pode fazer upgrade ou downgrade a qualquer momento. As alterações serão aplicadas imediatamente e os valores ajustados proporcionalmente. Ao fazer downgrade, você mantém acesso até o final do período pago.')
               },
               {
-                question: "Há período de teste?",
-                answer: "Sim! Todos os planos pagos incluem um período de teste gratuito de 14 dias. Você poderá experimentar todas as funcionalidades do plano escolhido e cancelar a qualquer momento durante o período de teste sem custos."
+                question: t('Há período de teste?'),
+                answer: t('Sim! Todos os planos pagos incluem um período de teste gratuito de 14 dias. Você poderá experimentar todas as funcionalidades do plano escolhido e cancelar a qualquer momento durante o período de teste sem custos.')
               },
               {
-                question: "O plano Gratuito tem limitações?",
-                answer: "O plano Gratuito oferece 50 interações por mês, funcionalidades básicas de agenda, pesquisa simples e suporte por email. É uma ótima forma de conhecer a MoniqueBot antes de fazer upgrade para um plano pago."
+                question: t('O plano Gratuito tem limitações?'),
+                answer: t('O plano Gratuito oferece 50 interações por mês, funcionalidades básicas de agenda, pesquisa simples e suporte por email. É uma ótima forma de conhecer a MoniqueBot antes de fazer upgrade para um plano pago.')
               }
             ].map((faq, index) => (
               <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
@@ -319,21 +320,21 @@ const Planos = () => {
       {/* CTA Section */}
       <section className="section-padding bg-gradient-to-r from-primary to-secondary text-white">
         <div className="container-custom text-center">
-          <h2 className="text-4xl font-bold mb-6">Pronto para Começar?</h2>
+          <h2 className="text-4xl font-bold mb-6">{t('Pronto para Começar?')}</h2>
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Escolha o plano ideal e comece a usar a MoniqueBot hoje mesmo
+            {t('Escolha o plano ideal e comece a usar a MoniqueBot hoje mesmo')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contato" className="btn-accent">
-              Começar Agora
+              {t('Começar Agora')}
             </Link>
             <Link to="/funcionalidades" className="border-2 border-white text-white px-8 py-4 rounded-xl hover:bg-white hover:text-dark transition-all duration-300 font-semibold text-lg">
-              Ver Funcionalidades
+              {t('Ver Funcionalidades')}
             </Link>
           </div>
           <div className="mt-6">
             <p className="text-sm opacity-75">
-              ✨ Todos os planos incluem período de teste de 14 dias grátis
+              {t('')}
             </p>
           </div>
         </div>
@@ -350,12 +351,12 @@ const Planos = () => {
           <div className="bg-yellow-100 border border-yellow-200 text-yellow-900 shadow-xl rounded-xl px-5 py-4 max-w-sm flex items-start gap-3">
             <i className="fas fa-info-circle mt-1"></i>
             <div className="space-y-2">
-              <p className="text-sm sm:text-base">Deve estar logado na plataforma para aderir a um plano.</p>
+              <p className="text-sm sm:text-base">{t('Deve estar logado na plataforma para aderir a um plano.')}</p>
               <button
                 onClick={() => setIsLoginModalOpen(true)}
                 className="btn-primary px-4 py-2 text-sm sm:text-base"
               >
-                Fazer login
+                {t('Fazer login')}
               </button>
             </div>
           </div>

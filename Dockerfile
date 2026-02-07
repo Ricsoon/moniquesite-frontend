@@ -11,7 +11,7 @@ ARG VITE_API_URL=/api
 # Variáveis de ambiente para build
 ENV VITE_BASE_PATH=${VITE_BASE_PATH}
 ENV VITE_API_URL=${VITE_API_URL}
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 # Copiar arquivos de dependências
 COPY package*.json ./
@@ -21,6 +21,9 @@ RUN npm ci
 
 # Copiar código fonte
 COPY . .
+
+# Definir NODE_ENV para produção antes do build
+ENV NODE_ENV=production
 
 # Build da aplicação
 RUN npm run build

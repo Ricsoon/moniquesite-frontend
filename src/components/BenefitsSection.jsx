@@ -1,21 +1,24 @@
+import { useTranslation } from 'react-i18next'
+
 const BenefitsSection = () => {
+  const { t } = useTranslation()
   const benefits = [
     {
       icon: 'fas fa-brain',
-      title: 'Inteligência Adaptativa',
-      description: 'MoniqueBot aprende com suas preferências e se adapta ao seu estilo de vida, oferecendo respostas e sugestões cada vez mais personalizadas.',
+      title: t('Inteligência Adaptativa'),
+      description: t('MoniqueBot aprende com suas preferências e se adapta ao seu estilo de vida, oferecendo respostas e sugestões cada vez mais personalizadas.'),
       gradient: 'from-primary to-secondary'
     },
     {
       icon: 'fas fa-clock',
-      title: 'Otimização de Tempo',
-      description: 'Automatize tarefas repetitivas, agende compromissos e gerencie sua rotina de forma eficiente, ganhando horas preciosas no seu dia.',
+      title: t('Otimização de Tempo'),
+      description: t('Automatize tarefas repetitivas, agende compromissos e gerencie sua rotina de forma eficiente, ganhando horas preciosas no seu dia.'),
       gradient: 'from-accent to-green-400'
     },
     {
       icon: 'fas fa-comments',
-      title: 'Conversação Natural',
-      description: 'Interface conversacional intuitiva que entende contexto e mantém diálogos fluidos, tornando a interação natural e agradável.',
+      title: t('Conversação Natural'),
+      description: t('Interface conversacional intuitiva que entende contexto e mantém diálogos fluidos, tornando a interação natural e agradável.'),
       gradient: 'from-secondary to-purple-500'
     }
   ]
@@ -24,9 +27,9 @@ const BenefitsSection = () => {
     <section className="section-padding bg-white/50 overflow-visible">
       <div className="container-custom overflow-visible">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-dark mb-4">Por que Escolher a MoniqueBot?</h2>
+          <h2 className="text-4xl font-bold text-dark mb-4">{t('Por que Escolher a MoniqueBot?')}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Descubra os benefícios de ter uma assistente pessoal inteligente ao seu lado
+            {t('Descubra os benefícios de ter uma assistente pessoal inteligente ao seu lado')}
           </p>
         </div>
 

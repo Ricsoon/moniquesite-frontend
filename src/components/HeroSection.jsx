@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const HeroSection = () => {
-  const adjectives = ['Pessoal', 'Funcional', 'Profissional', 'Personalizada', 'Personificada', 'Particular']
+  const { t } = useTranslation()
+  const adjectives = [t('Pessoal'), t('Funcional'), t('Profissional'), t('Personalizada'), t('Personificada'), t('Particular')]
   const [currentAdjective, setCurrentAdjective] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -44,25 +46,24 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark leading-tight font-thunder">
-              <div className="break-words">Sua Assistente</div>
+              <div className="break-words">{t('Sua Assistente')}</div>
               <div className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary break-words">
                 {currentAdjective}
                 <span className="inline-block h-8 sm:h-10 md:h-12 bg-primary ml-1 animate-blink" style={{width: '5px'}}></span>
               </div>
-              <div className="break-words">Inteligente</div>
+              <div className="break-words">{t('Inteligente')}</div>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
-              MoniqueBot é mais do que uma assistente virtual. É sua companheira inteligente que aprende com você, 
-              entende suas necessidades e te ajuda a ser mais produtivo no dia a dia.
+              {t('MoniqueBot é mais do que uma assistente virtual. É sua companheira inteligente que aprende com você, entende suas necessidades e te ajuda a ser mais produtivo no dia a dia.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contato" className="btn-primary inline-flex items-center">
-                Começar a Usar
+                {t('Começar a Usar')}
                 <i className="fas fa-arrow-right ml-2"></i>
               </Link>
               <button onClick={scrollToDemo} className="btn-secondary inline-flex items-center">
                 <i className="fas fa-play-circle mr-2"></i>
-                Ver Demonstração
+                {t('Ver Demonstração')}
               </button>
             </div>
           </div>
@@ -76,20 +77,20 @@ const HeroSection = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-dark">MoniqueBot</h3>
-                    <p className="text-sm text-gray-500">Online - Pronta para ajudar</p>
+                    <p className="text-sm text-gray-500">{t('Online - Pronta para ajudar')}</p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-gray-50 rounded-2xl p-4 max-w-xs">
-                    <p className="text-gray-700">Olá! Como posso te ajudar hoje? Posso agendar compromissos, responder perguntas ou ajudar com tarefas!</p>
+                    <p className="text-gray-700">{t('Olá! Como posso te ajudar hoje? Posso agendar compromissos, responder perguntas ou ajudar com tarefas!')}</p>
                   </div>
                   <div className="bg-primary rounded-2xl p-4 max-w-xs ml-auto">
-                    <p className="text-white">Preciso de ajuda para organizar minha semana</p>
+                    <p className="text-white">{t('Preciso de ajuda para organizar minha semana')}</p>
                   </div>
                 </div>
                 <div className="mt-6">
                   <div className="flex space-x-2">
-                    <input type="text" placeholder="Digite sua mensagem..." className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                    <input type="text" placeholder={t('Digite sua mensagem...')} className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
                     <button className="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-green-500 transition-colors">
                       <i className="fas fa-paper-plane"></i>
                     </button>
