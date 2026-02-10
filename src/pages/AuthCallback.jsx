@@ -18,8 +18,15 @@ const AuthCallback = () => {
         const refreshToken = searchParams.get('refreshToken')
         const errorParam = searchParams.get('error')
 
+        console.log('[AuthCallback] Parâmetros recebidos:', {
+          token: token ? `${token.substring(0, 20)}...` : 'não recebido',
+          refreshToken: refreshToken ? `${refreshToken.substring(0, 20)}...` : 'não recebido',
+          error: errorParam,
+        })
+
         // Verificar se há erro na URL
         if (errorParam) {
+          console.error('[AuthCallback] Erro na URL:', errorParam)
           setError('Erro ao fazer login. Tente novamente.')
           setLoading(false)
           setTimeout(() => {
@@ -30,6 +37,7 @@ const AuthCallback = () => {
 
         // Verificar se há token
         if (!token) {
+          console.error('[AuthCallback] Token não recebido da URL')
           setError('Token não recebido. Tente fazer login novamente.')
           setLoading(false)
           setTimeout(() => {
@@ -40,10 +48,12 @@ const AuthCallback = () => {
 
         // Salvar token no localStorage
         localStorage.setItem('token', token)
+        console.log('[AuthCallback] Token salvo no localStorage')
         
         // Salvar refresh token se disponível
         if (refreshToken) {
           localStorage.setItem('refreshToken', refreshToken)
+          console.log('[AuthCallback] Refresh token salvo no localStorage')
         }
 
         // Buscar dados do usuário diretamente da API

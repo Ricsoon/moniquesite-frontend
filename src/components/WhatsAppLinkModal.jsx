@@ -175,7 +175,8 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
             </div>
 
             <button
-              type="submit"
+              type="button"
+              onClick={handleSendCode}
               disabled={loading}
               className="w-full min-h-[56px] flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -215,21 +216,21 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
                 {t('Verifique seu WhatsApp e digite o código de 6 dígitos recebido')}
               </p>
             </div>
+            <div className="flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={handleBackToPhone}
+                className="w-full px-4 py-3 text-gray-600 hover:text-gray-800 font-medium text-sm transition-colors"
+              >
+                <i className="fas fa-arrow-left mr-2"></i>
+                {t('Voltar e alterar número')}
+              </button>
 
-            <button
-              type="button"
-              onClick={handleBackToPhone}
-              className="w-full px-4 py-3 text-gray-600 hover:text-gray-800 font-medium text-sm transition-colors"
-            >
-              <i className="fas fa-arrow-left mr-2"></i>
-              {t('Voltar e alterar número')}
-            </button>
-
-            <button
-              type="submit"
-              disabled={loading || code.length !== 6}
-              className="w-full min-h-[56px] flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+              <button
+                type="submit"
+                disabled={loading || code.length !== 6}
+                className="w-full min-h-[56px] flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
               {loading ? (
                 <>
                   <i className="fas fa-spinner fa-spin"></i>
@@ -241,7 +242,8 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
                   <span>{t('Verificar e vincular')}</span>
                 </>
               )}
-            </button>
+              </button>
+            </div>
           </form>
         )}
       </div>

@@ -20,6 +20,7 @@ class ApiService {
     const token = this.getToken()
 
     const config = {
+      method: options.method || 'GET',
       headers: {
         'Content-Type': 'application/json',
         ...(token && { Authorization: `Bearer ${token}` }),
@@ -32,9 +33,18 @@ class ApiService {
       config.body = JSON.stringify(options.body)
     }
 
+    // Debug: log da requisição
+    console.log(`[API] ${config.method} ${url}`, {
+      hasToken: !!token,
+      headers: config.headers,
+      body: config.body ? JSON.parse(config.body) : null
+    })
+
     try {
       const response = await fetch(url, config)
       const data = await response.json()
+
+      console.log(`[API] Response status: ${response.status}`, data)
 
       if (!response.ok) {
         throw new Error(data.message || `Erro: ${response.statusText}`)
@@ -42,6 +52,7 @@ class ApiService {
 
       return data
     } catch (error) {
+      console.error(`[API] Error on ${config.method} ${url}:`, error)
       throw error
     }
   }
