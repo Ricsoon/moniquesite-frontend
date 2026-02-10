@@ -104,13 +104,27 @@ const Planos = () => {
     { feature: t('Armazenamento'), basic: t('Básico'), intermediate: t('Ampliado'), advanced: t('Ilimitado') }
   ]
 
-  const handlePlanClick = () => {
-    if (isAuthenticated) {
-      navigate('/perfil')
-    } else {
+  const handlePlanClick = (plan, index) => {
+    // If not authenticated, prompt login
+    if (!isAuthenticated) {
       setShowLoginPrompt(true)
       setIsLoginModalOpen(true)
+      return
     }
+
+    // Free plan -> go to profile
+    if (plan.price === t('R$ 0') || plan.name === t('Gratuito')) {
+      navigate('/perfil')
+      return
+    }
+
+    // For paid plans, forward user to profile with plan query params (profile will handle checkout)
+    const params = new URLSearchParams()
+    params.set('planName', plan.name)
+    params.set('planPrice', plan.price)
+    // include an index as a fallback plan identifier
+    params.set('planIndex', String(index))
+    navigate(`/perfil?${params.toString()}`)
   }
 
   const handleCloseLogin = () => {

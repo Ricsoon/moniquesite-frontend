@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { apiService } from '../services/api'
@@ -6,6 +8,8 @@ import WhatsAppLinkModal from '../components/WhatsAppLinkModal'
 
 const Perfil = () => {
   const { user, isAuthenticated, logout, refreshUserData } = useAuth()
+  const location = useLocation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('perfil')
   const [creditsAmount, setCreditsAmount] = useState('')
@@ -29,6 +33,13 @@ const Perfil = () => {
       }
     }
   }, [isAuthenticated, user])
+
+  // If user has no plan info, default to Gratuito
+  useEffect(() => {
+    if (user && (!user.activePlan || !user.activePlan.name) && !user.plan) {
+      // Keep UI showing 'Gratuito' via i18n fallback
+    }
+  }, [user])
 
   const handleWhatsAppModalClose = async () => {
     // Atualizar dados do usuário antes de fechar
@@ -191,12 +202,59 @@ const Perfil = () => {
                         <label className="text-xs sm:text-sm font-medium text-gray-600">Plano Atual</label>
                       </div>
                       <p className="text-lg md:text-xl font-semibold text-dark break-words">
-                        {user.activePlan?.name || user.plan || 'Não informado'}
+                        {user.activePlan?.name || user.plan || t('Gratuito')}
                       </p>
                     </div>
                   </div>
                 </div>
               )}
+
+              {/* If profile was opened with plan query params, show quick purchase CTA in credits tab */}
+              {activeTab === 'credits' && (() => {
+                const params = new URLSearchParams(location.search)
+                const planName = params.get('planName')
+                const planIndex = params.get('planIndex')
+                if (planName) {
+                  return (
+                    <div className="mb-6">
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-dark">{t('Continuar compra')}</div>
+                          <div className="text-sm text-gray-600">{t('Você iniciou a compra do plano')} {planName}. {t('Clique para finalizar o pagamento.')}</div>
+                        </div>
+                        <div>
+                          <button
+                            onClick={async () => {
+                              try {
+                                setLoading(true)
+                                // Try to create a transaction with default billingType PIX
+                                const planId = planIndex ? parseInt(planIndex) + 1 : undefined
+                                const resp = await apiService.createTransaction(planId || 1, 'PIX')
+                                // If response contains payment invoice or bankSlipUrl, open it
+                                const paymentUrl = resp.data?.payment?.invoiceUrl || resp.data?.payment?.bankSlipUrl
+                                if (paymentUrl) {
+                                  window.open(paymentUrl, '_blank')
+                                }
+                                // refresh user data and notify
+                                await refreshUserData()
+                                setMessage({ type: 'success', text: t('Transação criada. Verifique o pagamento.') })
+                              } catch (err) {
+                                setMessage({ type: 'error', text: err.message || t('Erro ao criar transação.') })
+                              } finally {
+                                setLoading(false)
+                              }
+                            }}
+                            className="btn-accent"
+                          >
+                            {t('Ir para pagamento')}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                return null
+              })()}
 
               {activeTab === 'credits' && (
                 <div className="max-w-2xl mx-auto">

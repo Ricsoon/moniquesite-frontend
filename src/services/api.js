@@ -91,6 +91,14 @@ class ApiService {
     })
   }
 
+  // Criar transação (comprar plano)
+  async createTransaction(planId, billingType = 'PIX', extra = {}) {
+    return this.request('/transactions', {
+      method: 'POST',
+      body: { planId, billingType, ...extra },
+    })
+  }
+
   // Enviar código de verificação do WhatsApp
   async sendWhatsAppCode(phone) {
     return this.request('/users/whatsapp/send-code', {
