@@ -100,7 +100,9 @@ const WhatsAppLinkModal = ({ isOpen, onClose }) => {
         return
       }
 
-      await apiService.verifyWhatsAppCode(code)
+      // enviar código + telefone (sem formatação)
+      const phoneNumbers = phone.replace(/\D/g, '')
+      await apiService.verifyWhatsAppCode(code, phoneNumbers)
       
       // Fechar modal (o onClose já atualiza os dados do usuário)
       onClose()

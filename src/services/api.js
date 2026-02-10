@@ -100,10 +100,10 @@ class ApiService {
   }
 
   // Verificar código e vincular WhatsApp
-  async verifyWhatsAppCode(code) {
+  async verifyWhatsAppCode(code, phone) {
     return this.request('/users/whatsapp/verify-code', {
       method: 'POST',
-      body: { code },
+      body: { code, phone },
     })
   }
 }
