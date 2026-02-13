@@ -372,13 +372,13 @@ const Perfil = () => {
                         <div 
                           key={index} 
                           className={`relative bg-white rounded-xl shadow-lg border-2 p-4 transition-all duration-200 hover:shadow-xl ${
-                            plan.popular ? 'border-primary' : 'border-gray-200'
-                          } ${isCurrentPlan ? 'border-accent bg-accent/5' : ''}`}
+                            isCurrentPlan ? 'border-accent bg-accent/5' : 'border-gray-200'
+                          }`}
                         >
-                          {plan.popular && (
+                          {isCurrentPlan && (
                             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                              <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold">
-                                {t('Recomendado')}
+                              <span className="bg-accent text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                {t('Atual')}
                               </span>
                             </div>
                           )}
