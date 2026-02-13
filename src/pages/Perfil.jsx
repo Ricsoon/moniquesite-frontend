@@ -293,19 +293,19 @@ const Perfil = () => {
               })()}
 
               {activeTab === 'credits' && (
-                <div className="max-w-6xl mx-auto">
-                  <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-dark mb-2">
-                      {t('Escolha seu Plano')}
+                <div className="max-w-5xl mx-auto">
+                  <div className="text-center mb-6">
+                    <h2 className="text-2xl font-bold text-dark mb-1">
+                      {t('Upgrade seu Plano')}
                     </h2>
-                    <p className="text-gray-600">
-                      {t('Selecione o plano ideal para aproveitar ao máximo a Monique!')}
+                    <p className="text-sm text-gray-600">
+                      {t('Escolha o plano ideal para você')}
                     </p>
                   </div>
 
                   {message.text && (
                     <div
-                      className={`mb-6 p-4 rounded-xl ${
+                      className={`mb-4 p-3 rounded-lg text-sm ${
                         message.type === 'success'
                           ? 'bg-green-50 border border-green-200 text-green-700'
                           : 'bg-red-50 border border-red-200 text-red-700'
@@ -320,19 +320,16 @@ const Perfil = () => {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {[
                       {
                         name: t('Gratuito'),
                         price: t('R$ 0'),
                         period: t('/mês'),
-                        description: t('Perfeito para começar e experimentar a MoniqueBot'),
                         features: [
-                          t('Até 50 interações por mês'),
+                          t('50 interações/mês'),
                           t('Funcionalidades básicas'),
-                          t('Pesquisas simples'),
-                          t('Suporte por email'),
-                          t('1 usuário')
+                          t('Suporte por email')
                         ],
                         buttonText: t('Plano Atual'),
                         buttonStyle: 'btn-secondary',
@@ -342,15 +339,10 @@ const Perfil = () => {
                         name: t('Pro'),
                         price: t('R$ 50'),
                         period: t('/mês'),
-                        description: t('Ideal para profissionais e pequenas empresas'),
                         features: [
-                          t('Mais de 50 interações por mês'),
-                          t('Todas as funcionalidades do Google'),
-                          t('Pesquisa avançada'),
-                          t('Suporte prioritário'),
-                          t('1 único usuários'),
-                          t('Integrações básicas'),
-                          t('Memória ampliada')
+                          t('200 interações/mês'),
+                          t('Funcionalidades completas'),
+                          t('Suporte prioritário')
                         ],
                         buttonText: t('Assinar Pro'),
                         buttonStyle: 'btn-primary',
@@ -360,15 +352,10 @@ const Perfil = () => {
                         name: t('Ilimitado'),
                         price: t('R$ 200'),
                         period: t('/mês'),
-                        description: t('Para empresas que precisam de recursos avançados'),
                         features: [
-                          t('Interações Ilimitadas'),
-                          t('Análise de dados avançada'),
-                          t('Relatórios personalizados'),
-                          t('Suporte 24/7'),
-                          t('Todas as integrações'),
-                          t('Memória ilimitado'),
-                          t('Treinamento personalizado')
+                          t('Interações ilimitadas'),
+                          t('Todos os recursos'),
+                          t('Suporte 24/7')
                         ],
                         buttonText: t('Assinar Ilimitado'),
                         buttonStyle: 'btn-accent',
@@ -384,42 +371,41 @@ const Perfil = () => {
                       return (
                         <div 
                           key={index} 
-                          className={`relative bg-white rounded-2xl shadow-2xl p-6 md:p-8 transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_25px_60px_-25px_rgba(0,0,0,0.25)] ${
-                            plan.popular ? 'md:ring-2 ring-primary md:transform md:scale-105' : ''
-                          } ${isCurrentPlan ? 'ring-2 ring-accent' : ''}`}
+                          className={`relative bg-white rounded-xl shadow-lg border-2 p-4 transition-all duration-200 hover:shadow-xl ${
+                            plan.popular ? 'border-primary' : 'border-gray-200'
+                          } ${isCurrentPlan ? 'border-accent bg-accent/5' : ''}`}
                         >
                           {plan.popular && (
-                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                              <span className="bg-primary text-white px-6 py-2 rounded-full text-sm font-semibold">
+                            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                              <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold">
                                 {t('Recomendado')}
                               </span>
                             </div>
                           )}
                           
                           {isCurrentPlan && (
-                            <div className="absolute -top-4 right-4">
-                              <span className="bg-accent text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            <div className="absolute -top-2 right-2">
+                              <span className="bg-accent text-white px-2 py-1 rounded-full text-xs font-semibold">
                                 {t('Atual')}
                               </span>
                             </div>
                           )}
                           
-                          <div className="text-center mb-6 md:mb-8">
-                            <h3 className="text-xl md:text-2xl font-bold text-dark mb-2">{plan.name}</h3>
-                            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">{plan.description}</p>
-                            <div className="mb-4 md:mb-6">
-                              <span className="text-4xl md:text-5xl font-bold text-dark">
+                          <div className="text-center mb-4">
+                            <h3 className="text-lg font-bold text-dark mb-1">{plan.name}</h3>
+                            <div className="mb-3">
+                              <span className="text-3xl font-bold text-dark">
                                 {plan.price}
                               </span>
-                              <span className="text-gray-600 text-lg md:text-xl">{plan.period}</span>
+                              <span className="text-gray-600 text-sm ml-1">{plan.period}</span>
                             </div>
                           </div>
 
-                          <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8">
+                          <ul className="space-y-2 mb-4 min-h-[80px]">
                             {plan.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-start space-x-3">
-                                <i className="fas fa-check text-accent mt-1 flex-shrink-0"></i>
-                                <span className="text-sm md:text-base text-gray-700 break-words">{feature}</span>
+                              <li key={featureIndex} className="flex items-center space-x-2 text-sm text-gray-700">
+                                <i className="fas fa-check text-accent text-xs flex-shrink-0"></i>
+                                <span>{feature}</span>
                               </li>
                             ))}
                           </ul>
@@ -427,7 +413,7 @@ const Perfil = () => {
                           <button 
                             onClick={() => handlePlanClick(plan, index)}
                             disabled={isDisabled}
-                            className={`w-full ${plan.buttonStyle} text-center block disabled:opacity-50 disabled:cursor-not-allowed`}
+                            className={`w-full ${plan.buttonStyle} py-2 text-sm font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
                           >
                             {loading && !isCurrentPlan ? (
                               <span className="flex items-center justify-center">
