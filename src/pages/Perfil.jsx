@@ -12,7 +12,6 @@ const Perfil = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('perfil')
-  const [creditsAmount, setCreditsAmount] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ type: '', text: '' })
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false)
@@ -58,36 +57,73 @@ const Perfil = () => {
     )
   }
 
-  const handleAddCredits = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage({ type: '', text: '' })
-
-    try {
-      const amount = parseFloat(creditsAmount)
-
-      if (isNaN(amount) || amount <= 0) {
-        setMessage({ type: 'error', text: 'Por favor, insira um valor válido.' })
-        setLoading(false)
-        return
-      }
-
-      // Chamada para a API para adicionar créditos
-      await apiService.addCredits(amount)
-      
-      setMessage({ 
-        type: 'success', 
-        text: `Créditos adicionados com sucesso! Valor: R$ ${amount.toFixed(2)}` 
-      })
-      setCreditsAmount('')
-      
-      // Atualizar dados do usuário após adicionar créditos
+  const handlePlanClick = async (plan, index) => {
+    // Free plan -> just refresh profile
+    if (plan.price === t('R$ 0') || plan.name === t('Gratuito')) {
       await refreshUserData()
-    } catch (error) {
-      setMessage({ 
-        type: 'error', 
-        text: error.message || 'Erro ao adicionar créditos. Tente novamente.' 
-      })
+      return
+    }
+
+    // For paid plans, create transaction and redirect to payment
+    try {
+      setLoading(true)
+      setMessage({ type: '', text: '' })
+      
+      // Buscar planos da API para obter o ID real do plano
+      let planId = null
+      try {
+        const plansResponse = await apiService.request('/plans')
+        const plans = plansResponse.data?.plans || []
+        
+        // Mapear nomes dos planos para IDs
+        const planNameMap = {
+          [t('Gratuito')]: 'Gratuito',
+          [t('Pro')]: 'Pro',
+          [t('Ilimitado')]: 'Ilimitado'
+        }
+        
+        const planName = planNameMap[plan.name] || plan.name
+        const foundPlan = plans.find(p => p.name === planName)
+        
+        if (foundPlan && foundPlan.id) {
+          planId = foundPlan.id
+        } else {
+          // Fallback: usar index + 1 se não encontrar pelo nome
+          planId = index + 1
+          console.warn(`Plano "${planName}" não encontrado na API, usando índice ${planId}`)
+        }
+      } catch (err) {
+        // Se falhar ao buscar planos, usar índice como fallback
+        planId = index + 1
+        console.warn('Erro ao buscar planos da API, usando índice:', err)
+      }
+      
+      if (!planId) {
+        throw new Error('Não foi possível identificar o plano')
+      }
+      
+      // Criar transação com o planId correto
+      const resp = await apiService.createTransaction(planId, 'PIX')
+      
+      // Validar se o valor da transação corresponde ao plano
+      const transactionAmount = resp.data?.transaction?.amount
+      const expectedPrice = parseFloat(plan.price.replace('R$ ', '').replace(',', '.').trim())
+      
+      if (transactionAmount !== undefined && Math.abs(transactionAmount - expectedPrice) > 0.01) {
+        console.warn(`Aviso: Valor da transação (R$ ${transactionAmount}) não corresponde ao plano (R$ ${expectedPrice})`)
+      }
+      
+      // If response contains payment invoice or bankSlipUrl, open it
+      const paymentUrl = resp.data?.payment?.invoiceUrl || resp.data?.payment?.bankSlipUrl
+      if (paymentUrl) {
+        window.open(paymentUrl, '_blank')
+      }
+      
+      // refresh user data and notify
+      await refreshUserData()
+      setMessage({ type: 'success', text: t('Transação criada. Verifique o pagamento.') })
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message || t('Erro ao criar transação.') })
     } finally {
       setLoading(false)
     }
@@ -257,16 +293,13 @@ const Perfil = () => {
               })()}
 
               {activeTab === 'credits' && (
-                <div className="max-w-2xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                   <div className="text-center mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-r from-accent to-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-coins text-white text-3xl"></i>
-                    </div>
                     <h2 className="text-3xl font-bold text-dark mb-2">
-                      Adicionar Créditos
+                      {t('Escolha seu Plano')}
                     </h2>
                     <p className="text-gray-600">
-                      Adicione créditos para aproveitar ainda mais da Monique!
+                      {t('Selecione o plano ideal para aproveitar ao máximo a Monique!')}
                     </p>
                   </div>
 
@@ -287,58 +320,127 @@ const Perfil = () => {
                     </div>
                   )}
 
-                  <form onSubmit={handleAddCredits} className="space-y-6">
-                    <div>
-                      <label htmlFor="credits" className="block text-sm font-medium text-dark mb-2">
-                        Valor (R$)
-                      </label>
-                      <div className="relative">
-                        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">
-                          R$
-                        </span>
-                        <input
-                          id="credits"
-                          type="number"
-                          step="0.01"
-                          min="0.01"
-                          value={creditsAmount}
-                          onChange={(e) => setCreditsAmount(e.target.value)}
-                          required
-                          className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg font-semibold"
-                          placeholder="0,00"
-                        />
-                      </div>
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    {[
+                      {
+                        name: t('Gratuito'),
+                        price: t('R$ 0'),
+                        period: t('/mês'),
+                        description: t('Perfeito para começar e experimentar a MoniqueBot'),
+                        features: [
+                          t('Até 50 interações por mês'),
+                          t('Funcionalidades básicas'),
+                          t('Pesquisas simples'),
+                          t('Suporte por email'),
+                          t('1 usuário')
+                        ],
+                        buttonText: t('Plano Atual'),
+                        buttonStyle: 'btn-secondary',
+                        popular: false
+                      },
+                      {
+                        name: t('Pro'),
+                        price: t('R$ 50'),
+                        period: t('/mês'),
+                        description: t('Ideal para profissionais e pequenas empresas'),
+                        features: [
+                          t('Mais de 50 interações por mês'),
+                          t('Todas as funcionalidades do Google'),
+                          t('Pesquisa avançada'),
+                          t('Suporte prioritário'),
+                          t('1 único usuários'),
+                          t('Integrações básicas'),
+                          t('Memória ampliada')
+                        ],
+                        buttonText: t('Assinar Pro'),
+                        buttonStyle: 'btn-primary',
+                        popular: true
+                      },
+                      {
+                        name: t('Ilimitado'),
+                        price: t('R$ 200'),
+                        period: t('/mês'),
+                        description: t('Para empresas que precisam de recursos avançados'),
+                        features: [
+                          t('Interações Ilimitadas'),
+                          t('Análise de dados avançada'),
+                          t('Relatórios personalizados'),
+                          t('Suporte 24/7'),
+                          t('Todas as integrações'),
+                          t('Memória ilimitado'),
+                          t('Treinamento personalizado')
+                        ],
+                        buttonText: t('Assinar Ilimitado'),
+                        buttonStyle: 'btn-accent',
+                        popular: false
+                      }
+                    ].map((plan, index) => {
+                      const currentPlanName = user.activePlan?.name || user.plan || t('Gratuito')
+                      const isCurrentPlan = plan.name === currentPlanName || 
+                        (plan.name === t('Gratuito') && !user.activePlan && !user.plan)
+                      const buttonText = isCurrentPlan ? t('Plano Atual') : plan.buttonText
+                      const isDisabled = isCurrentPlan || loading
+                      
+                      return (
+                        <div 
+                          key={index} 
+                          className={`relative bg-white rounded-2xl shadow-2xl p-6 md:p-8 transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_25px_60px_-25px_rgba(0,0,0,0.25)] ${
+                            plan.popular ? 'md:ring-2 ring-primary md:transform md:scale-105' : ''
+                          } ${isCurrentPlan ? 'ring-2 ring-accent' : ''}`}
+                        >
+                          {plan.popular && (
+                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                              <span className="bg-primary text-white px-6 py-2 rounded-full text-sm font-semibold">
+                                {t('Recomendado')}
+                              </span>
+                            </div>
+                          )}
+                          
+                          {isCurrentPlan && (
+                            <div className="absolute -top-4 right-4">
+                              <span className="bg-accent text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                {t('Atual')}
+                              </span>
+                            </div>
+                          )}
+                          
+                          <div className="text-center mb-6 md:mb-8">
+                            <h3 className="text-xl md:text-2xl font-bold text-dark mb-2">{plan.name}</h3>
+                            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">{plan.description}</p>
+                            <div className="mb-4 md:mb-6">
+                              <span className="text-4xl md:text-5xl font-bold text-dark">
+                                {plan.price}
+                              </span>
+                              <span className="text-gray-600 text-lg md:text-xl">{plan.period}</span>
+                            </div>
+                          </div>
 
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="w-full btn-accent disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {loading ? (
-                        <span className="flex items-center justify-center">
-                          <i className="fas fa-spinner fa-spin mr-2"></i>
-                          Processando...
-                        </span>
-                      ) : (
-                        <>
-                          <i className="fas fa-plus-circle mr-2"></i>
-                          Adicionar Créditos
-                        </>
-                      )}
-                    </button>
-                  </form>
+                          <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8">
+                            {plan.features.map((feature, featureIndex) => (
+                              <li key={featureIndex} className="flex items-start space-x-3">
+                                <i className="fas fa-check text-accent mt-1 flex-shrink-0"></i>
+                                <span className="text-sm md:text-base text-gray-700 break-words">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
 
-                  <div className="mt-8 bg-primary/5 rounded-xl p-6">
-                    <h3 className="font-semibold text-dark mb-2 flex items-center">
-                      <i className="fas fa-info-circle text-primary mr-2"></i>
-                      Informações
-                    </h3>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Os créditos serão adicionados imediatamente após a confirmação do pagamento</li>
-                      <li>• Você receberá um e-mail de confirmação</li>
-                      <li>• Em caso de dúvidas, entre em contato com nosso suporte</li>
-                    </ul>
+                          <button 
+                            onClick={() => handlePlanClick(plan, index)}
+                            disabled={isDisabled}
+                            className={`w-full ${plan.buttonStyle} text-center block disabled:opacity-50 disabled:cursor-not-allowed`}
+                          >
+                            {loading && !isCurrentPlan ? (
+                              <span className="flex items-center justify-center">
+                                <i className="fas fa-spinner fa-spin mr-2"></i>
+                                {t('Processando...')}
+                              </span>
+                            ) : (
+                              buttonText
+                            )}
+                          </button>
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               )}
