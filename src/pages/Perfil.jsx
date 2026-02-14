@@ -362,7 +362,21 @@ const Perfil = () => {
                         popular: false
                       }
                     ].map((plan, index) => {
-                      const currentPlanName = user.activePlan?.name || user.plan || t('Gratuito')
+                      // Obter nome do plano atual - suporta activePlan como objeto com 'name' ou como ID string
+                      const getActivePlanName = () => {
+                        if (user.activePlan) {
+                          // activePlan pode ser objeto {id, name, ...} ou string/number com ID
+                          if (typeof user.activePlan === 'object' && user.activePlan.name) {
+                            return user.activePlan.name
+                          }
+                        }
+                        if (user.plan) {
+                          return user.plan
+                        }
+                        return t('Gratuito')
+                      }
+                      
+                      const currentPlanName = getActivePlanName()
                       const isCurrentPlan = plan.name === currentPlanName || 
                         (plan.name === t('Gratuito') && !user.activePlan && !user.plan)
                       const buttonText = isCurrentPlan ? t('Plano Atual') : plan.buttonText
